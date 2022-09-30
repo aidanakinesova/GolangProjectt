@@ -1,0 +1,69 @@
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"html/template"
+	"database/sql"
+
+	_ "github.com/go-sql-driver/mysql"
+	// "golang.org/x/text/date"
+
+	"github.com/gorilla/mux"
+)
+
+type Tickets struct {
+	Id, Price uint16
+	FromWhere, ToWhere, Duration string
+	// DepartureDate time.Date
+	// DepartureTime, ArrivalTime time.Time
+}
+
+var tkts = []Tickets{}
+
+
+func index(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("templates/index.html", "templates/header.html", "templates/footer.html")
+
+	if err != nil {
+		fmt.Fprintf(w, err.Error())
+	}
+
+	db, err := sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/golangProject")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
+
+	res, err := db.Query("SELECT `fromWhere`, `toWhere` from `tickets`")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	tkts = []Tickets{}
+
+	for res.Next() {
+		var tkt Tickets
+		err = res.Scan(&tkt.FromWhere, &tkt.ToWhere)
+		if err != nil {
+			panic(err.Error())
+		}
+
+		tkts = append(tkts, tkt)
+	}
+
+	t.ExecuteTemplate(w, "index", tkts)
+
+}
+
+func handleFunc() {
+	rtr := mux.NewRouter()
+	rtr.HandleFunc("/", index).Methods("GET")
+
+	http.Handle("/", rtr)
+	http.ListenAndServe(":8080", nil)
+}
+
+func main() {
+	handleFunc()
+}

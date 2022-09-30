@@ -1,0 +1,35 @@
+{{ define "tickets" }}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+</head>
+<body>
+    <header>
+        <p>Я бади</p>   
+    </header>
+
+    <main>
+        <h1>Выведем все данные связанные с тикетами</h1>
+        {{ range . }}
+            <p>{{ .Id }}</p>
+            <p>{{ .FromWhere }}</p>
+            <p>{{ .ToWhere }}</p> 
+            <p>{{ .Duration }}</p>
+        {{ else }}
+            <p>No data!</p>
+        {{ end }}
+    </main>
+
+    <footer>
+        <p>Я футер ухахаха</p>
+    </footer>
+</body>
+</html>
+
+
+{{ end }}

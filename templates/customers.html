@@ -1,0 +1,24 @@
+{{define "customers"}}
+{{template "header"}}
+<body>
+    <h1>Customers page works!</h1>
+
+    {{range .}}
+    <div>
+        <ul>
+            <li>
+                <h2>{{.Id}} ) {{.Name}} {{.Surname}}</h2>
+                <p>
+                    Age: {{.Age}}; Sex: {{.Sex}}; Card Number: {{.CardNumber}}
+                </p>
+            </li>
+        </ul>
+        
+    </div>
+    {{else}}
+    <p>there is no customers с</p>
+    {{end}}
+    
+</body>
+</html>
+{{end}}

@@ -1,0 +1,24 @@
+{{define "articles"}}
+{{template "header"}}
+<body>
+    <h1>Main page works!</h1>
+
+    {{range .}}
+    <div>
+        <ul>
+            <li>
+                <h2>{{.Id}} ) {{.Name}}</h2>
+                <p>{{.Anons}}
+                    {{.FullText}}
+                </p>
+            </li>
+        </ul>
+        
+    </div>
+    {{else}}
+    <p>there is empty</p>
+    {{end}}
+    
+</body>
+</html>
+{{end}}

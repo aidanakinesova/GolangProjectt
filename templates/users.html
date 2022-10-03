@@ -1,0 +1,23 @@
+{{define "users"}}
+{{template "header"}}
+<body>
+    <h1>Users page works!</h1>
+
+    {{range .}}
+    <div>
+        <ul>
+            <li>
+                <h2>{{.Id}} ) {{.Name}}</h2>
+                <p>{{.Password}}
+                </p>
+            </li>
+        </ul>
+        
+    </div>
+    {{else}}
+    <p>there is no users</p>
+    {{end}}
+    
+</body>
+</html>
+{{end}}
